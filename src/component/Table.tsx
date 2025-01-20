@@ -1,14 +1,16 @@
 import React from "react";
 
 type TableProps = {
-  columns: { 
+  columns: {
     header: string;
     accessor: string;
-    className?: string
-}[];
+    className?: string;
+  }[];
+  renderRow: (item: any) => React.ReactNode;
+  data: any[];
 };
 
-export default function Table({ columns }: TableProps) {
+export default function Table({ columns , renderRow, data}: TableProps) {
   return (
     <table className="w-full mt-4">
       <thead>
@@ -20,7 +22,7 @@ export default function Table({ columns }: TableProps) {
           ))}
         </tr>
       </thead>
-      <tbody>{/* Your data rows go here */}</tbody>
+      <tbody>{data.map((item) => renderRow(item))}</tbody>
     </table>
   );
 }
