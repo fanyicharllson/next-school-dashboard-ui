@@ -1,9 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
+import { useState } from "react";
 
-export default function FormModal({
+// USE LAZY LOADING
+
+// import TeacherForm from "./forms/TeacherForm";
+// import StudentForm from "./forms/StudentForm";
+
+const TeacherForm = dynamic(() => import("./forms/TeacherForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+const StudentForm = dynamic(() => import("./forms/StudentForm"), {
+  loading: () => <h1>Loading...</h1>,
+});
+
+const forms: {
+  [key: string]: (type: "plus" | "edit", data?: any) => JSX.Element;
+} = {
+  teacher: (type, data) => <TeacherForm type={type} data={data} />,
+  student: (type, data) => <StudentForm type={type} data={data} />
+};
+
+const FormModal = ({
   table,
   type,
   data,
@@ -17,15 +37,15 @@ export default function FormModal({
     | "class"
     | "lesson"
     | "exam"
+    | "assignment"
     | "result"
     | "attendance"
     | "event"
-    | "announcement"
-    | "assignment";
+    | "announcement";
   type: "plus" | "edit" | "delete";
   data?: any;
-  id: number;
-}) {
+  id?: number;
+}) => {
   const size = type === "plus" ? "w-8 h-8" : "w-7 h-7";
   const bgColor =
     type === "plus"
@@ -38,7 +58,7 @@ export default function FormModal({
 
   const Form = () => {
     return type === "delete" && id ? (
-      <form action="" className="flex flex-col gap-4 p-4">
+      <form action="" className="p-4 flex flex-col gap-4">
         <span className="text-center font-medium">
           All data will be lost. Are you sure you want to delete this {table}?
         </span>
@@ -46,8 +66,10 @@ export default function FormModal({
           Delete
         </button>
       </form>
+    ) : type === "plus" || type === "edit" ? (
+      forms[table](type, data)
     ) : (
-      "create or update form"
+      "Form not found!"
     );
   };
 
@@ -67,11 +89,13 @@ export default function FormModal({
               className="absolute top-4 right-4 cursor-pointer"
               onClick={() => setOpen(false)}
             >
-              <Image src="/close.png" alt="close" width={14} height={14} />
+              <Image src="/close.png" alt="" width={14} height={14} />
             </div>
           </div>
         </div>
       )}
     </>
   );
-}
+};
+
+export default FormModal;

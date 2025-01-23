@@ -10,7 +10,7 @@ type TableProps = {
   data: any[];
 };
 
-export default function Table({ columns , renderRow, data}: TableProps) {
+function Table({ columns , renderRow, data}: TableProps) {
   return (
     <table className="w-full mt-4">
       <thead>
@@ -26,3 +26,5 @@ export default function Table({ columns , renderRow, data}: TableProps) {
     </table>
   );
 }
+
+export default React.memo(Table);

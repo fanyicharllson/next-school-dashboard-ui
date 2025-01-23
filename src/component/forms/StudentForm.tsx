@@ -1,14 +1,14 @@
 "use client";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import Schema from "@/lib/teacher_Schema";
+import Schema from "@/lib/student_Schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import InputField from "../InputField";
 
 type FormData = z.infer<typeof Schema>;
 
-const TeacherForm = ({ type, data }: { type: "plus" | "edit"; data?: any }) => {
+const StudentForm = ({ type, data }: { type: "plus" | "edit"; data?: any }) => {
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ const TeacherForm = ({ type, data }: { type: "plus" | "edit"; data?: any }) => {
 
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit(Onsubmit)}>
-      <h1 className="text-xl font-semibold">Create a teacher</h1>
+      <h1 className="text-xl font-semibold">Create new Student</h1>
       <span className="text-xs text-gray-400 font-medium">
         Authentication Information
       </span>
@@ -85,4 +85,4 @@ const TeacherForm = ({ type, data }: { type: "plus" | "edit"; data?: any }) => {
   );
 };
 
-export default TeacherForm;
+export default StudentForm;

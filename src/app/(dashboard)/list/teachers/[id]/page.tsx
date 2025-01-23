@@ -29,7 +29,7 @@ const SingleTeacherPage = () => {
                 <h1 className="text-xl font-semibold">Leonard Snyder</h1>
                 {role === "admin" && <FormModal
                   table="teacher"
-                  type="update"
+                  type="edit"
                   data={{
                     id: 1,
                     username: "deanguerrero",
